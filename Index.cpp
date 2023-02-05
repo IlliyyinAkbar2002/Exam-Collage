@@ -10,7 +10,7 @@
  *
  */
 
-#include <iostream>s
+#include <iostream>
 #include <cstdlib>
 #include <string>
 using namespace std;
@@ -90,6 +90,7 @@ void printAll(Node *temp)
         urut++;
         cout << "\t\tApakah ingin melihat barang berdasarkan stok tertinggi (y/n)" << endl;
         string ask9;
+        cout << "\t\tMasukkan : ";
         cin >> ask9;
         if (ask9 == "y")
         {
@@ -391,7 +392,7 @@ void searchElement(Node *head)
 
     cout << "\t\tDaftar barang: \n";
 
-    cout << "\t\tNo urut data\tNama item\tstok\t\tharga/item" << endl;
+    cout << "\t\tNo urut data\tId\tNama item" << endl;
     do
     {
 
@@ -399,16 +400,15 @@ void searchElement(Node *head)
         {
             cout << "\t\t [" << urut2 << "]";
             urut2++;
+            cout << "\t\t" << temp->item.id;
             cout << "\t\t" << temp->item.nama;
-            cout << "\t\t" << temp->item.stok;
-            cout << "\t\t" << temp->item.harga;
             cout << endl;
         }
         temp = temp->next;
         search++;
     } while (temp != head);
 
-    cout << "\n\n\t\tBarang apa yang mau dicari : ";
+    cout << "\n\n\t\tMasukkan id/kode barang yang mau dicari : ";
     cin >> seacrhName;
 
     temp = head;
@@ -416,10 +416,11 @@ void searchElement(Node *head)
     bool found = false;
     do
     {
-        if (seacrhName == temp->item.nama)
+        if (seacrhName == temp->item.id)
         {
-            cout << "\t\tNo urut data\tNama item\tstok\t\tharga/item" << endl;
+            cout << "\t\tNo urut data\tId\tNama item\tstok\t\tharga/item" << endl;
             cout << "\t\t [" << search - 1 << "]";
+            cout << "\t\t" << temp->item.id;
             cout << "\t\t" << temp->item.nama;
             cout << "\t\t" << temp->item.stok;
             cout << "\t\t" << temp->item.harga;
@@ -555,6 +556,24 @@ int main()
                     }
                     else if (fillhapus == "2" || fillhapus == "dua" || fillhapus == "Dua" || fillhapus == "DUA")
                     {
+                        Node *cetak = head;
+                        int angka = 1;
+                        do
+                        {
+
+                            if (cetak->item.nama != "kosong")
+                            {
+
+                                cout << "\t\t [" << angka << "]";
+                                angka++;
+                                cout << "\t\t" << cetak->item.id;
+                                cout << "\t\t" << cetak->item.nama;
+                                cout << "\t\t" << cetak->item.stok;
+                                cout << "\t\t" << cetak->item.harga;
+                                cout << endl;
+                            }
+                            cetak = cetak->next;
+                        } while (cetak != head);
                         cout << "\t\tingin menghapus nomor berapa : ";
                         cin >> setelah;
                         cout << "\t\tlist number " << setelah << " have been deleted" << endl;
@@ -564,6 +583,7 @@ int main()
                         }
                         else if (setelah > 1 && setelah < panjang)
                         {
+
                             deleteAfter(head);
                         }
                         else if (setelah > panjang)
@@ -696,7 +716,7 @@ int main()
                     cout << "\t\tMohon maaf persediaan barang ini sedang kosong" << endl;
                 }
                 cout << endl
-                     << "\t\tApakah anda ingin menambah barang (y/n) : ";
+                     << "\t\tApakah anda ingin melakukan transaksi lagi? (y/n) : ";
                 cin >> tanya;
                 cout << "\t\t----------------------------" << endl;
                 if (tanya == 'y')
@@ -707,7 +727,21 @@ int main()
         }
         else if (fillmenu == "5" || fillmenu == "lima" || fillmenu == "Lima" || fillmenu == "LIMA")
         {
-            searchElement(head);
+            Node *cari = head;
+            int itg = 0;
+            do
+            {
+                cari = cari->next;
+                itg++;
+            } while (cari != head);
+            if (itg == 1)
+            {
+                cout << "\t\tMohon maaf tidak ada barang yang terdaftar" << endl;
+            }
+            else if (itg > 1)
+            {
+                searchElement(head);
+            }
         }
         else if (fillmenu == "6" || fillmenu == "enam" || fillmenu == "Enam" || fillmenu == "ENAM")
         {
@@ -1002,7 +1036,7 @@ int main()
                 }
                 else if (ask6 == 6)
                 {
-                    cout << "\t\tMohon maaf inputan anda salah" << endl;
+                    cout << "\t\tSilahkan kembali ke main menu" << endl;
                 }
             }
             else
@@ -1014,6 +1048,10 @@ int main()
         {
             cout << "\t\tSELESAI" << endl;
             break;
+        }
+        else
+        {
+            cout << "\t\tMaaf masukan anda salah" << endl;
         }
     } while (true);
 }
